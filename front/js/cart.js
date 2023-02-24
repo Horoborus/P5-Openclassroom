@@ -4,7 +4,7 @@ let cart = JSON.parse(localStorage.getItem('cart'));
 let affichagePanier = cart.length;
 let item = document.querySelector("#cart__items");
 
-for (let i = 0; i < cart.length; i++) {
+for (let i = 0; i < cart.length; i++){
   let cart_i = cart[i];
   let itemId = cart_i["id"];
   
@@ -38,19 +38,21 @@ for (let i = 0; i < cart.length; i++) {
           </div>
         </article>
       `;
+      //ajout supprimer
     });
-
+}
 //Supprimer Item
 // Rajouter event listener pour supprimer un élément dans le panier
 
 // selectionner tout les buttons supprimer
-const removeButtons = document.querySelectorAll('.deleteItem');
+console.log("avant");
+const removeButtons = document.querySelector(".deleteItem");
 console.log(removeButtons);
 // loop sur tout les buttons et rajouter event listeners
 removeButtons.forEach(button => {
   button.addEventListener('click', event => {
-    // prend le ID item a remover
-    const itemId = button.dataset.itemId;
+    // prend le ID item a supprimer
+    const itemId = button.dataset.id;
 
     // prendre le cart local storage
     const cart = JSON.parse(localStorage.getItem('cart'));
@@ -68,7 +70,7 @@ removeButtons.forEach(button => {
     location.reload();
   });
 });
-}
+
 
 
 

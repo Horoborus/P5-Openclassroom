@@ -54,10 +54,10 @@ function receiveData(kanaps) {
   
         
         
-   if (color == null || color ==="" || quantity == null || quantity == 0 ) {
+   if (color == null || color ==="" || quantity == null || quantity == 0 ){
     alert("Veuillez sélectionner une couleur et une quantité");
     return
-}  
+    }  
        const data = {
          id: id,
          color: color,
@@ -65,11 +65,33 @@ function receiveData(kanaps) {
          
        }
       let cart = JSON.parse(localStorage.getItem('cart'));
-      cart.push(data)
+      
     
+      let itemFound = cart.find(element => element.id === id && element.color === color);
+      console.log(itemFound);
+
+      if (itemFound !== undefined){
+        let arrayIndex = cart.findIndex((object => object.id === id && object.color === color))
+        if(parseInt(quantity) > 0 && parseInt(cart[arrayIndex].quantity) + parseInt(quantity) <= 100){
+          cart[arrayIndex].quantity = parseInt(cart[arrayIndex].quantity) + parseInt(quantity)
+          localStorage.setItem("cart", JSON.stringify(cart));
+          alert("Le produit à bien etait mis jour")  
+        }else{
+          alert("C'est pas possible de mettre montant superieur à 100")
+        }
+      }else{
+        if(parseInt(quantity) > 0 && parseInt(quantity) <= 100){
+          cart.push(data)
+          localStorage.setItem("cart", JSON.stringify(cart));
+          alert("Le produit à bien etait ajouter au panier")
+        }else{
+          alert("Veuillez choisir une quantité valide")
+        }
+      }
+
        //Renvoyer aprés le button panier a cart.html
-       window.location.href = "cart.html";
-       localStorage.setItem("cart", JSON.stringify(cart));
+      //  window.location.href = "cart.html";
+      //  localStorage.setItem("cart", JSON.stringify(cart));
         
     })
   }
