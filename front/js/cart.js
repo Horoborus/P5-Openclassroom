@@ -1,5 +1,3 @@
-console.log('connecté'); 
-
 let cart = JSON.parse(localStorage.getItem('cart'));
 let affichagePanier = cart.length;
 let item = document.querySelector("#cart__items");
@@ -38,38 +36,55 @@ for (let i = 0; i < cart.length; i++){
           </div>
         </article>
       `;
-      //ajout supprimer
+      
+      //Ajouter la function button supprimer au click sur le bouton supprimer
+      const removeButtons = document.querySelectorAll(".deleteItem");
+      
+
+      // loop sur tout les buttons et rajouter event listeners
+      removeButtons.forEach(button => {
+        button.addEventListener('click', event => {
+          // prend le ID item a supprimer
+          const itemId = button.dataset.id;
+
+          // prendre le cart local storage
+          const cart = JSON.parse(localStorage.getItem('cart'));
+
+          // trouver item dans le cart avec le meme id
+          const itemIndex = cart.findIndex(item => item.id === itemId);
+
+          // si le item est trouvé, supprimer le item
+          if (itemIndex !== 2) {
+            cart.splice(itemIndex, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+          }
+         // actualiser le panier
+          location.reload();
+        });
+      });
+      //function pour calculer le prix et quantité totale
+      function calculerPrix() {
+        let prix = document.querySelectorAll("p[data-prix]");
+        let prixTotal = 0;
+        for (let i = 0; i < prix.length; i++) {
+          prixTotal += parseInt(prix[i].textContent) * cart[i].quantity;
+        }
+        document.querySelector("#totalPrice").innerHTML = prixTotal;
+        console.log(prixTotal);
+      }
+      
+      
+     
+     
+
     });
 }
-//Supprimer Item
-// Rajouter event listener pour supprimer un élément dans le panier
 
-// selectionner tout les buttons supprimer
-console.log("avant");
-const removeButtons = document.querySelector(".deleteItem");
-console.log(removeButtons);
-// loop sur tout les buttons et rajouter event listeners
-removeButtons.forEach(button => {
-  button.addEventListener('click', event => {
-    // prend le ID item a supprimer
-    const itemId = button.dataset.id;
+  
 
-    // prendre le cart local storage
-    const cart = JSON.parse(localStorage.getItem('cart'));
 
-    // trouver item dans le cart avec le meme id
-    const itemIndex = cart.findIndex(item => item.id === itemId);
 
-    // si le item est trouvé, supprimer le item
-    if (itemIndex !== -1) {
-      cart.splice(itemIndex, 1);
-      localStorage.setItem('cart', JSON.stringify(cart));
-    }
 
-    // actualiser le panier
-    location.reload();
-  });
-});
 
 
 

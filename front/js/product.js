@@ -68,7 +68,7 @@ function receiveData(kanaps) {
       
     
       let itemFound = cart.find(element => element.id === id && element.color === color);
-      console.log(itemFound);
+      
 
       if (itemFound !== undefined){
         let arrayIndex = cart.findIndex((object => object.id === id && object.color === color))
@@ -90,7 +90,7 @@ function receiveData(kanaps) {
       }
 
        //Renvoyer aprés le button panier a cart.html
-      //  window.location.href = "cart.html";
+        window.location.href = "cart.html";
       //  localStorage.setItem("cart", JSON.stringify(cart));
         
     })
