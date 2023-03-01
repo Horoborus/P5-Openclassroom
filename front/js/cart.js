@@ -1,6 +1,7 @@
 let cart = JSON.parse(localStorage.getItem('cart'));
 let affichagePanier = cart.length;
 let item = document.querySelector("#cart__items");
+let quantities = 0;
 
 for (let i = 0; i < cart.length; i++){
   let cart_i = cart[i];
@@ -72,10 +73,30 @@ for (let i = 0; i < cart.length; i++){
         document.querySelector("#totalPrice").innerHTML = prixTotal;
         console.log(prixTotal);
       }
+      calculerPrix()
       
-      
-     
-     
+      quantities += parseInt(cart_i.quantity);
+      let totalQuantities = document.getElementById("totalQuantity");
+      totalQuantities.innerHTML = quantities;
+
+     const inputsQuantity = document.querySelectorAll(".itemQuantity");
+     Object.values(inputsQuantity).forEach(inputQuantity => {
+      inputQuantity.addEventListener("change", function(event){
+        let article = inputQuantity.closest("article")
+        let productId = article.getAttribute("data-id")
+        let productColor = article.getAttribute("data-couleur")
+        let currentQuantity = inputQuantity.value;
+        if(currentQuantity > 0 && currentQuantity <= 100){
+          let productIndex = cart.findIndex((object => object.id === productId && object.color === productColor))
+          cart[productIndex].quantity = parseInt(currentQuantity);
+          localStorage.setItem("cart", JSON.stringify(cart))
+          alert("La quantité a bien été modifiée")
+          location.reload()
+        }else{
+          alert("Veuillez metre une quantité comprise entre 1 et 100")
+        }
+      })
+     })
 
     });
 }
